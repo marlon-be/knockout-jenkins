@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Jenkins Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="app.css" />
+    <script type="text/javascript" src="jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="knockout-3.1.0.js"></script>
+    <script type="text/javascript" src="knockout.mapping-latest.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+<body>
+
+<div class="widget-content" id="jobs" data-bind="with: data">
+    <h1 data-bind="text: nodeDescription"></h1>
+    <div data-bind="foreach: jobs">
+        <div class="job" data-bind="css: color">
+            <h2><a data-bind="attr: { href: url, title: name }, text: name"></a></h2>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

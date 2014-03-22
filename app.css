@@ -1,0 +1,21 @@
+.job {
+    width: 300px;
+    height: 150px;
+    float: left;
+    border: 1px solid #000;
+}
+.blue {
+    background-color: green;
+}
+
+.red {
+    background-color: darkred;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.disabled {
+    background-color: gray;
+}
