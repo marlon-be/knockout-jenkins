@@ -10,13 +10,13 @@
 <body>
 
 <div class="widget-content" id="jobs" data-bind="with: data">
-    <div data-bind="foreach: jobs">
-        <div class="job" data-bind="attr: { style: style, class: cssclass }">
-            <a data-bind="attr: { href: url, title: name }">
+    <ul data-bind="foreach: jobs">
+        <li class="job" data-bind="attr: { style: style }">
+            <a data-bind="attr: { href: url, title: name, class: cssclass }">
                 <h2 data-bind="text: name" ></h2>
             </a>
-        </div>
-    </div>
+        </li>
+    </ul>
 </div>
 
 </body>

@@ -6,9 +6,10 @@
 html, body {
     height: 100%;
     min-height: 100%;
+    background: url('img/bg.jpeg');
 }
 
-.job {
+/*.job {
     width: 10%;
     height: 150px;
     float: left;
@@ -24,14 +25,23 @@ html, body {
 }
 .job > a > h2 {
     margin: 5px;
-}
+}*/
 .blue {
     background-color: green;
 }
 
 .red {
     background-color: darkred;
-    width: 50%;
+
+    position:relative;
+    z-index:5;
+
+
+    -webkit-animation-name: spaceboots;
+    -webkit-animation-duration: 0.8s;
+    -webkit-transform-origin:50% 50%;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
 }
 
 .yellow {
@@ -48,4 +58,68 @@ html, body {
 a {
     text-decoration: none;
     color: black;
+}
+
+ul,li{
+     list-style:none;
+ }
+ul{
+    overflow:hidden;
+    width: 100%;
+    height: 100%;
+}
+ul li a{
+    text-decoration:none;
+    color:#000;
+    background:#ffc;
+    display:block;
+    height:10em;
+    /*width:10em;*/
+    padding:1em;
+    /* Firefox */
+    -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+    /* Safari+Chrome */
+    -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    /* Opera */
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    width: 100%;
+}
+ul li{
+    margin:1em;
+    float:left;
+}
+ul li:nth-child(even) a{
+    -o-transform:rotate(4deg);
+    -webkit-transform:rotate(4deg);
+    -moz-transform:rotate(4deg);
+    position:relative;
+    top:5px;
+}
+ul li:nth-child(3n) a{
+    -o-transform:rotate(-3deg);
+    -webkit-transform:rotate(-3deg);
+    -moz-transform:rotate(-3deg);
+    position:relative;
+    top:-5px;
+}
+ul li:nth-child(5n) a{
+    -o-transform:rotate(5deg);
+    -webkit-transform:rotate(5deg);
+    -moz-transform:rotate(5deg);
+    position:relative;
+    top:-10px;
+}
+
+@-webkit-keyframes spaceboots {
+    0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+    10% { -webkit-transform: translate(-1px, -2px) rotate(-3deg); }
+    20% { -webkit-transform: translate(-3px, 0px) rotate(3deg); }
+    30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+    40% { -webkit-transform: translate(1px, -1px) rotate(3deg); }
+    50% { -webkit-transform: translate(-1px, 2px) rotate(-3deg); }
+    60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+    70% { -webkit-transform: translate(2px, 1px) rotate(-3deg); }
+    80% { -webkit-transform: translate(-1px, -1px) rotate(3deg); }
+    90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+    100% { -webkit-transform: translate(1px, -2px) rotate(-3deg); }
 }

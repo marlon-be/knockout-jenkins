@@ -13,12 +13,18 @@ var viewModel = function (options) {
                 if ( byColor[job.color] == undefined ) byColor[job.color] = [];
                 byColor[job.color].push(job);
             });
-            var rows = Math.ceil(data.jobs.length/10) + Math.ceil((byColor['red'] != undefined?byColor['red'].length:0)/5)*2;
+            var viewportWidth = $(window).width();
+            var viewportHeight = $(window).height();
+            var rows = Math.ceil(data.jobs.length/15);
+
             var jobs = [];
+            var maxHeight = Math.floor(viewportHeight/rows);
+            var maxWidth = Math.floor(viewportWidth/10);
+            var size = maxWidth<maxHeight?maxWidth:maxHeight;
             $.each(['red', 'yellow','aborted','blue','disabled'], function(index, color) {
                 if ( byColor[color] != undefined ) {
                     $.each(byColor[color], function(index, job) {
-                        job.style = "width: "+(color == 'red'?20:10)+"%; height: "+Math.floor(viewportHeight / (color == 'red'?rows/2:rows))+"px;";
+                        job.style = "width: "+size+"px; height: "+size+"px;";
                         job.cssclass = "job "+color;
                         jobs.push(job);
                     });
