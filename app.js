@@ -40,6 +40,23 @@ $( document ).ready(function() {
         ),
         document.getElementById('jobs')
     );
+
+    var queryVars = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    $.each(queryVars, function (i, queryVar) {
+        var parts = queryVar.split('=');
+        if (parts[0] == 'mvertical') {
+            $('.widget-content').css({
+                'margin-top': parts[1] + 'px',
+                'margin-bottom': parts[1] + 'px'
+            });
+        }
+        if (parts[0] == 'mhorizontal') {
+            $('.widget-content').css({
+                'margin-left': parts[1] + 'px',
+                'margin-right': parts[1] + 'px'
+            });
+        }
+    });
 });
 
 
