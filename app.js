@@ -5,6 +5,20 @@ var viewModel = function (options) {
 
     self.tick = function () {
         $.get(options.url, function (data) {
+            var byColor = {};
+            $.each (data.jobs, function(key, job) {
+                if ( byColor[job.color] == undefined ) byColor[job.color] = [];
+                byColor[job.color].push(job);
+            });
+            var jobs = [];
+            $.each(['red', 'yellow','aborted','blue','disabled'], function(index, color) {
+                if ( byColor[color] != undefined ) {
+                    $.each(byColor[color], function(index, job) {
+                        jobs.push(job);
+                    });
+                }
+            });
+            data.jobs = jobs;
             self.data(ko.mapping.fromJS(data));
         });
     };
