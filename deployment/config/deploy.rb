@@ -25,13 +25,11 @@ set :stages, ["development"]
 set :default_stage, "development"
 set :stage_dir, "config/deploy"
 
-
 # =============================================================================
 # RELEASE
 # =============================================================================
 set :keep_releases, 5
-set :deploy_via, :copy
-set :copy_cache, "_build"
+set :deploy_via, :remote_cache
 
 set :copy_exclude, [
     ".git",
