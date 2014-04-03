@@ -32,7 +32,7 @@ var viewModel = function (options) {
                     $.each(byColor[color], function(index, job) {
                         job.cssclass = "job "+color;
                         if ( color == 'red' ) {
-                            job.style = "width: "+(size*2)+"px; height: "+(size*2)+"px;";
+                            job.style = "width: "+(size)+"px; height: "+(size)+"px;";
                             data.failed.push(job);
                         } else {
                             job.style = "width: "+size+"px; height: "+size+"px;";
