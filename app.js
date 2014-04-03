@@ -2,6 +2,17 @@ var viewModel = function (options) {
     var self = this;
 
     self.data = ko.observable();
+    var queryVars = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    var top = 0, left = 0;
+    $.each(queryVars, function (i, queryVar) {
+        var parts = queryVar.split('=');
+        if (parts[0] == 'mvertical') {
+            top = parts[1];
+        }
+        if (parts[0] == 'mhorizontal') {
+            left = parts[1];
+        }
+    });
 
     self.tick = function () {
         $.get(options.url, function (data) {
@@ -10,10 +21,10 @@ var viewModel = function (options) {
                 if ( byColor[job.color] == undefined ) byColor[job.color] = [];
                 byColor[job.color].push(job);
             });
-            var viewportWidth = $(window).width(), viewportHeight = $(window).height(),
+            var viewportWidth = $('.widget-content').width(), viewportHeight = $(window).height(),
                 rows = Math.ceil(data.jobs.length/10);
-            var maxHeight = Math.floor(viewportHeight/rows), maxWidth = Math.floor(viewportWidth/10);
-            var size = (maxWidth<maxHeight?maxWidth:maxHeight)-32;
+            var maxHeight = Math.floor((viewportHeight-top)/rows), maxWidth = Math.floor((viewportWidth-left)/10);
+            var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
             data.failed = [];
             $.each(['red', 'yellow','aborted','blue','disabled'], function(index, color) {
@@ -31,6 +42,12 @@ var viewModel = function (options) {
                 }
             });
             self.data(ko.mapping.fromJS(data));
+            $('.widget-content > ul').css({
+                top: top + 'px'
+            });
+            $('.widget-content > ul').css({
+                left: left + 'px'
+            });
         });
     };
 
@@ -45,23 +62,6 @@ $( document ).ready(function() {
         ),
         document.getElementById('jobs')
     );
-
-    var queryVars = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    $.each(queryVars, function (i, queryVar) {
-        var parts = queryVar.split('=');
-        if (parts[0] == 'mvertical') {
-            $('.widget-content').css({
-                'margin-top': parts[1] + 'px',
-                'margin-bottom': parts[1] + 'px'
-            });
-        }
-        if (parts[0] == 'mhorizontal') {
-            $('.widget-content').css({
-                'margin-left': parts[1] + 'px',
-                'margin-right': parts[1] + 'px'
-            });
-        }
-    });
 });
 
 
