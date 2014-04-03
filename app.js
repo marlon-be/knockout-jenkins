@@ -1,9 +1,6 @@
 var viewModel = function (options) {
     var self = this;
 
-    var viewportWidth = $(window).width();
-    var viewportHeight = $(window).height();
-
     self.data = ko.observable();
 
     self.tick = function () {
@@ -13,24 +10,26 @@ var viewModel = function (options) {
                 if ( byColor[job.color] == undefined ) byColor[job.color] = [];
                 byColor[job.color].push(job);
             });
-            var viewportWidth = $(window).width();
-            var viewportHeight = $(window).height();
-            var rows = Math.ceil(data.jobs.length/15);
-
-            var jobs = [];
-            var maxHeight = Math.floor(viewportHeight/rows);
-            var maxWidth = Math.floor(viewportWidth/10);
-            var size = maxWidth<maxHeight?maxWidth:maxHeight;
+            var viewportWidth = $(window).width(), viewportHeight = $(window).height(),
+                rows = Math.ceil(data.jobs.length/10);
+            var maxHeight = Math.floor(viewportHeight/rows), maxWidth = Math.floor(viewportWidth/10);
+            var size = (maxWidth<maxHeight?maxWidth:maxHeight)-32;
+            data.jobs = [];
+            data.failed = [];
             $.each(['red', 'yellow','aborted','blue','disabled'], function(index, color) {
                 if ( byColor[color] != undefined ) {
                     $.each(byColor[color], function(index, job) {
-                        job.style = "width: "+size+"px; height: "+size+"px;";
                         job.cssclass = "job "+color;
-                        jobs.push(job);
+                        if ( color == 'red' ) {
+                            job.style = "width: "+(size*2)+"px; height: "+(size*2)+"px;";
+                            data.failed.push(job);
+                        } else {
+                            job.style = "width: "+size+"px; height: "+size+"px;";
+                            data.jobs.push(job);
+                        }
                     });
                 }
             });
-            data.jobs = jobs;
             self.data(ko.mapping.fromJS(data));
         });
     };
@@ -42,7 +41,7 @@ var viewModel = function (options) {
 $( document ).ready(function() {
     ko.applyBindings(
         new viewModel(
-            { url: "/fetch.php", interval: 30000 }
+            { url: "/fetch.php", interval: 5000 }
         ),
         document.getElementById('jobs')
     );

@@ -6,11 +6,19 @@
     <script type="text/javascript" src="knockout-3.1.0.js"></script>
     <script type="text/javascript" src="knockout.mapping-latest.js"></script>
     <script type="text/javascript" src="app.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Reenie+Beanie' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 <div class="widget-content" id="jobs" data-bind="with: data">
     <ul data-bind="foreach: jobs">
+        <li class="job" data-bind="attr: { style: style }">
+            <a data-bind="attr: { href: url, title: name, class: cssclass }">
+                <h2 data-bind="text: name" ></h2>
+            </a>
+        </li>
+    </ul>
+    <ul class="failed" data-bind="foreach: failed">
         <li class="job" data-bind="attr: { style: style }">
             <a data-bind="attr: { href: url, title: name, class: cssclass }">
                 <h2 data-bind="text: name" ></h2>
