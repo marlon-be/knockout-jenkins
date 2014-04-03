@@ -70,7 +70,7 @@ ul.failed {
 }
 ul.failed li {
     margin: 2em;
-    font-size: 32px;
+    font-size: 28px;
 }
 ul li a{
     text-decoration:none;
@@ -91,6 +91,7 @@ ul li a{
 ul li{
     margin:1em;
     float:left;
+    font-size: 14px;
 }
 ul li:nth-child(even) a{
     -o-transform:rotate(4deg);
