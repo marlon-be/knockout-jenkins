@@ -8,7 +8,6 @@ html, body {
     height: 100%;
     min-height: 100%;
     background: url('img/bg-content.jpg');
-    overflow:hidden;
 }
 
 .blue {
@@ -71,5 +70,23 @@ ul li{
     margin:1em;
     float:left;
     font-size: 14px;
+}
+
+.header{
+    margin: 5px 0 10px 5px;
+}
+
+.header img{
+    float: left;
+    top: 2px;
+    left: 10px;
+}
+
+.header h1{
+    float: left;
+    position: relative;
+    top: 2px;
+    left: 10px;
+    color: white;
 }
 

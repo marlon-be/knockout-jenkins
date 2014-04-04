@@ -3,7 +3,7 @@ var viewModel = function (options) {
 
     self.data = ko.observable();
     var queryVars = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    var top = 0, left = 0;
+    var top = 48, left = 0;
     $.each(queryVars, function (i, queryVar) {
         var parts = queryVar.split('=');
         if (parts[0] == 'mvertical') {
