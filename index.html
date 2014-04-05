@@ -25,15 +25,15 @@
                         <div class="bar" data-bind="css: name, style: { height: percentage }"></div>
                     </div>
                     <ul class="failed" data-bind="foreach: failed">
-                        <li class="job" data-bind="attr: { style: style }">
-                            <a data-bind="attr: { href: url, title: name, class: cssclass }">
+                        <li class="job" data-bind="style: { height: size, width: size }">
+                            <a class="job" data-bind="css: color, attr: { href: url, title: name }">
                                 <h2 class="title" data-bind="text: name" ></h2>
                             </a>
                         </li>
                     </ul>
                     <ul data-bind="foreach: jobs">
-                        <li class="job" data-bind="attr: { style: style }">
-                            <a data-bind="attr: { href: url, title: name, class: cssclass }">
+                        <li class="job" data-bind="style: { height: size, width: size }">
+                            <a class="job" data-bind="css: color, attr: { href: url, title: name }">
                                 <h2 class="title" data-bind="text: name" ></h2>
                             </a>
                         </li>
