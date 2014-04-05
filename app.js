@@ -3,14 +3,14 @@ var viewModel = function (options) {
 
     self.data = ko.observable();
     var queryVars = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    var top = 0, left = 0;
+    var marginVertical = 0, marginHorizontal = 0;
     $.each(queryVars, function (i, queryVar) {
         var parts = queryVar.split('=');
         if (parts[0] == 'mvertical') {
-            top = parts[1];
+            marginVertical = parts[1];
         }
         if (parts[0] == 'mhorizontal') {
-            left = parts[1];
+            marginHorizontal = parts[1];
         }
     });
 
@@ -24,13 +24,16 @@ var viewModel = function (options) {
             });
             var viewportWidth = $('.widget-content').width(), viewportHeight = $(window).height(),
                 rows = Math.ceil(data.jobs.length/10);
-            var maxHeight = Math.floor((viewportHeight-top)/rows), maxWidth = Math.floor((viewportWidth-left)/10);
+            var maxHeight = Math.floor((viewportHeight - (marginVertical * 2) )/rows), maxWidth = Math.floor((viewportWidth- (marginHorizontal * 2))/10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
             data.failed = [];
+            data.colors = [];
             $.each(['red', 'yellow','aborted','blue','disabled'], function(index, color) {
                 if ( byColor[color] != undefined ) {
+                    var colorObj = {name: color, count: 0};
                     $.each(byColor[color], function(index, job) {
+                        colorObj.count++;
                         job.cssclass = "job "+color;
                         if ( color == 'red' ) {
                             job.style = "width: "+(size)+"px; height: "+(size)+"px;";
@@ -40,14 +43,21 @@ var viewModel = function (options) {
                             data.jobs.push(job);
                         }
                     });
+                    data.colors.push(colorObj);
                 }
             });
-            self.data(ko.mapping.fromJS(data));
-            $('.widget-content > ul').css({
-                top: top + 'px'
+            var totalJobs = data.jobs.length + data.failed.length;
+            $.each(data.colors, function(index, color) {
+                color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
-            $('.widget-content > ul').css({
-                left: left + 'px'
+            self.data(ko.mapping.fromJS(data));
+            $('#positioning').css({
+                'padding-top': marginVertical + 'px',
+                'padding-bottom': marginVertical + 'px'
+            });
+            $('#positioning').css({
+                'padding-left': marginHorizontal + 'px',
+                'padding-right': marginHorizontal + 'px'
             });
         });
     };
