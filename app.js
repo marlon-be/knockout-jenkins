@@ -28,7 +28,7 @@ var viewModel = function (options) {
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
             data.colors = [];
-            $.each(['red', 'yellow','aborted','blue','disabled'], function(index, color) {
+            $.each(['red', 'red_anime', 'yellow', 'yellow_anime','aborted', 'aborted_anime','blue', 'blue_anime','disabled', 'disabled_anime'], function(index, color) {
                 if ( byColor[color] != undefined ) {
                     var colorObj = {name: color, count: 0};
                     $.each(byColor[color], function(index, job) {
