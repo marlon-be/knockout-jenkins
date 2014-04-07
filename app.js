@@ -16,9 +16,26 @@ var viewModel = function (options) {
 
 
     self.tick = function () {
-        $.get(options.url, function (data) {
+        var data = {};
+        
+        var finalizeTick = function() {
+            self.data(ko.mapping.fromJS(data));
+            $('#positioning').css({
+                'padding-top': marginVertical + 'px',
+                'padding-bottom': marginVertical + 'px'
+            });
+            $('#positioning').css({
+                'padding-left': marginHorizontal + 'px',
+                'padding-right': marginHorizontal + 'px'
+            });
+        };
+        
+        var jobsFinished = false;
+        var queueFinished = false;
+        
+        $.get(options.url, function (getData) {
             var byColor = {};
-            $.each (data.jobs, function(key, job) {
+            $.each (getData.jobs, function(key, job) {
                 if (job.color.substr(job.color.length - 6) == '_anime') {
                     job.color = job.color.substr(0, job.color.length - 6);
                     job.building = true;
@@ -29,7 +46,7 @@ var viewModel = function (options) {
                 byColor[job.color].push(job);
             });
             var viewportWidth = $('.jobs-container').width(), viewportHeight = $(window).height(),
-                rows = Math.ceil(data.jobs.length/10);
+                rows = Math.ceil(getData.jobs.length/10);
             var maxHeight = Math.floor(viewportHeight / rows), maxWidth = Math.floor(viewportWidth / 10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
@@ -54,15 +71,24 @@ var viewModel = function (options) {
             $.each(data.colors, function(index, color) {
                 color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
-            self.data(ko.mapping.fromJS(data));
-            $('#positioning').css({
-                'padding-top': marginVertical + 'px',
-                'padding-bottom': marginVertical + 'px'
+            
+            jobsFinished = true;
+            if (jobsFinished && queueFinished) {
+                finalizeTick();
+            }
+        });
+        
+        $.get(options.queueUrl, function (getData) {
+            data.queue = [];
+            $.each(getData.items, function (i, item) {
+                item.name = item.task.name
+                data.queue.push(item);
             });
-            $('#positioning').css({
-                'padding-left': marginHorizontal + 'px',
-                'padding-right': marginHorizontal + 'px'
-            });
+            
+            queueFinished = true
+            if (jobsFinished && queueFinished) {
+                finalizeTick();
+            }
         });
     };
 
