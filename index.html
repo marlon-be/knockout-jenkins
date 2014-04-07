@@ -24,13 +24,6 @@
                     <div class="bar-outline" data-bind="foreach: colors">
                         <div class="bar" data-bind="css: name, style: { height: percentage }"></div>
                     </div>
-                    <ul class="failed" data-bind="foreach: failed">
-                        <li class="job" data-bind="style: { height: size, width: size }">
-                            <a class="job" data-bind="css: color, attr: { href: url, title: name }">
-                                <h2 class="title" data-bind="text: name" ></h2>
-                            </a>
-                        </li>
-                    </ul>
                     <ul data-bind="foreach: jobs">
                         <li class="job" data-bind="style: { height: size, width: size }">
                             <a class="job" data-bind="css: color, attr: { href: url, title: name }">

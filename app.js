@@ -27,7 +27,6 @@ var viewModel = function (options) {
             var maxHeight = Math.floor((viewportHeight - (marginVertical * 2) )/rows), maxWidth = Math.floor((viewportWidth- (marginHorizontal * 2))/10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
-            data.failed = [];
             data.colors = [];
             $.each(['red', 'yellow','aborted','blue','disabled'], function(index, color) {
                 if ( byColor[color] != undefined ) {
@@ -36,16 +35,12 @@ var viewModel = function (options) {
                         colorObj.count++;
                         job.cssclass = "job "+color;
                         job.size = size + 'px';
-                        if ( color == 'red' ) {
-                            data.failed.push(job);
-                        } else {
-                            data.jobs.push(job);
-                        }
+                        data.jobs.push(job);
                     });
                     data.colors.push(colorObj);
                 }
             });
-            var totalJobs = data.jobs.length + data.failed.length;
+            var totalJobs = data.jobs.length;
             $.each(data.colors, function(index, color) {
                 color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
