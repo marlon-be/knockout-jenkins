@@ -22,9 +22,9 @@ var viewModel = function (options) {
                 if ( byColor[job.color] == undefined ) byColor[job.color] = [];
                 byColor[job.color].push(job);
             });
-            var viewportWidth = $('.widget-content').width(), viewportHeight = $(window).height(),
+            var viewportWidth = $('.jobs-container').width(), viewportHeight = $(window).height(),
                 rows = Math.ceil(data.jobs.length/10);
-            var maxHeight = Math.floor((viewportHeight - (marginVertical * 2) )/rows), maxWidth = Math.floor((viewportWidth- (marginHorizontal * 2))/10);
+            var maxHeight = Math.floor(viewportHeight / rows), maxWidth = Math.floor(viewportWidth / 10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
             data.colors = [];
