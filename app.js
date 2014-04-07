@@ -19,6 +19,12 @@ var viewModel = function (options) {
         $.get(options.url, function (data) {
             var byColor = {};
             $.each (data.jobs, function(key, job) {
+                if (job.color.substr(job.color.length - 6) == '_anime') {
+                    job.color = job.color.substr(0, job.color.length - 6);
+                    job.building = true;
+                } else {
+                    job.building = false;
+                }
                 if ( byColor[job.color] == undefined ) byColor[job.color] = [];
                 byColor[job.color].push(job);
             });
@@ -27,20 +33,24 @@ var viewModel = function (options) {
             var maxHeight = Math.floor(viewportHeight / rows), maxWidth = Math.floor(viewportWidth / 10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
+            data.building = [];
             data.colors = [];
             $.each(['red', 'red_anime', 'yellow', 'yellow_anime','aborted', 'aborted_anime','blue', 'blue_anime','disabled', 'disabled_anime'], function(index, color) {
                 if ( byColor[color] != undefined ) {
                     var colorObj = {name: color, count: 0};
                     $.each(byColor[color], function(index, job) {
                         colorObj.count++;
-                        job.cssclass = "job "+color;
                         job.size = size + 'px';
-                        data.jobs.push(job);
+                        if (job.building) {
+                            data.building.push(job);
+                        } else {
+                            data.jobs.push(job);
+                        }
                     });
                     data.colors.push(colorObj);
                 }
             });
-            var totalJobs = data.jobs.length;
+            var totalJobs = data.jobs.length + data.building.length;
             $.each(data.colors, function(index, color) {
                 color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
