@@ -122,3 +122,20 @@ div.bar-outline {
     from { box-shadow: 0 0 10px #333; }
     to { box-shadow: 0 0 20px #c00; }
 }
+
+/* queue */
+.queue-item {
+    width: 80px;
+    height: 80px;
+}
+
+.queue {
+    height: 80px;
+    width: 100%;
+    padding: 10px;
+    border-right: 0;
+    position: absolute;
+    left: 194px;
+    bottom: 25px;
+    background-color: rgba(255,255,255,0.3);
+}

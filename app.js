@@ -13,23 +13,46 @@ var viewModel = function (options) {
             marginHorizontal = parts[1];
         }
     });
+    $('#positioning').css({
+        'padding-top': marginVertical + 'px',
+        'padding-bottom': marginVertical + 'px'
+    });
+    $('#positioning').css({
+        'padding-left': marginHorizontal + 'px',
+        'padding-right': marginHorizontal + 'px'
+    });
 
 
     self.tick = function () {
-        $.get(options.url, function (data) {
-            var byColor = {};
-            $.each (data.jobs, function(key, job) {
-                if (job.color.substr(job.color.length - 6) == '_anime') {
+        var data = {};
+        
+        var finalizeTick = function() {
+            data.queue = [];
+            $.extend(data.queue, data.pending, data.building);
+            self.data(ko.mapping.fromJS(data));
+        };
+        
+        var fixColor = function (job) {
+            if (job.color.substr(job.color.length - 6) == '_anime') {
                     job.color = job.color.substr(0, job.color.length - 6);
                     job.building = true;
                 } else {
                     job.building = false;
                 }
+        };
+        
+        var jobsFinished = false;
+        var queueFinished = false;
+        
+        $.get(options.url, function (getData) {
+            var byColor = {};
+            $.each (getData.jobs, function(key, job) {
+                fixColor(job);
                 if ( byColor[job.color] == undefined ) byColor[job.color] = [];
                 byColor[job.color].push(job);
             });
             var viewportWidth = $('.jobs-container').width(), viewportHeight = $(window).height(),
-                rows = Math.ceil(data.jobs.length/10);
+                rows = Math.ceil(getData.jobs.length/10);
             var maxHeight = Math.floor(viewportHeight / rows), maxWidth = Math.floor(viewportWidth / 10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
@@ -41,28 +64,43 @@ var viewModel = function (options) {
                     $.each(byColor[color], function(index, job) {
                         colorObj.count++;
                         job.size = size + 'px';
+                        job.cssClass = job.color;
                         if (job.building) {
+                            job.cssClass += ' building';
                             data.building.push(job);
-                        } else {
-                            data.jobs.push(job);
                         }
+                        data.jobs.push(job);
                     });
                     data.colors.push(colorObj);
                 }
             });
-            var totalJobs = data.jobs.length + data.building.length;
+            var totalJobs = data.jobs.length;
             $.each(data.colors, function(index, color) {
                 color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
-            self.data(ko.mapping.fromJS(data));
-            $('#positioning').css({
-                'padding-top': marginVertical + 'px',
-                'padding-bottom': marginVertical + 'px'
+            
+            jobsFinished = true;
+            if (jobsFinished && queueFinished) {
+                finalizeTick();
+            }
+        });
+        
+        $.get(options.queueUrl, function (getData) {
+            data.pending = [];
+            $.each(getData.items, function (i, item) {
+                item.name = item.task.name
+                fixColor(item);
+                item.cssClass = item.color;
+                if (item.building) {
+                    item.cssClass += ' building';
+                }
+                data.pending.push(item);
             });
-            $('#positioning').css({
-                'padding-left': marginHorizontal + 'px',
-                'padding-right': marginHorizontal + 'px'
-            });
+            
+            queueFinished = true
+            if (jobsFinished && queueFinished) {
+                finalizeTick();
+            }
         });
     };
 
@@ -73,7 +111,7 @@ var viewModel = function (options) {
 $( document ).ready(function() {
     ko.applyBindings(
         new viewModel(
-            { url: "/fetch.php", interval: 5000 }
+            { url: "/fetch.php", queueUrl: '/fetch_queue.php', interval: 5000 }
         ),
         document.getElementById('jobs')
     );
