@@ -24,16 +24,9 @@
                     <div class="bar-outline" data-bind="foreach: colors">
                         <div class="bar" data-bind="css: name, style: { height: percentage }"></div>
                     </div>
-                    <ul class="jobs-container building-jobs" data-bind="foreach: building">
-                        <li class="job building" data-bind="style: { height: size, width: size }">
-                            <a class="job" data-bind="css: color, attr: { href: url, title: name }">
-                                <h2 class="title" data-bind="text: name" ></h2>
-                            </a>
-                        </li>
-                    </ul>
                     <ul class="jobs-container" data-bind="foreach: jobs">
                         <li class="job" data-bind="style: { height: size, width: size }">
-                            <a class="job" data-bind="css: color, attr: { href: url, title: name }">
+                            <a class="job" data-bind="css: cssClass, attr: { href: url, title: name }">
                                 <h2 class="title" data-bind="text: name" ></h2>
                             </a>
                         </li>

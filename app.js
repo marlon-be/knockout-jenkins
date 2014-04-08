@@ -54,7 +54,6 @@ var viewModel = function (options) {
             var maxHeight = Math.floor(viewportHeight / rows), maxWidth = Math.floor(viewportWidth / 10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
-            data.building = [];
             data.colors = [];
             $.each(['red', 'red_anime', 'yellow', 'yellow_anime','aborted', 'aborted_anime','blue', 'blue_anime','disabled', 'disabled_anime'], function(index, color) {
                 if ( byColor[color] != undefined ) {
@@ -62,16 +61,15 @@ var viewModel = function (options) {
                     $.each(byColor[color], function(index, job) {
                         colorObj.count++;
                         job.size = size + 'px';
+                        job.cssClass = job.color;
                         if (job.building) {
-                            data.building.push(job);
-                        } else {
-                            data.jobs.push(job);
+                            job.cssClass += ' building';
                         }
                     });
                     data.colors.push(colorObj);
                 }
             });
-            var totalJobs = data.jobs.length + data.building.length;
+            var totalJobs = data.jobs.length;
             $.each(data.colors, function(index, color) {
                 color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
