@@ -118,7 +118,7 @@ div.bar-outline {
     -animation: pulsate-red 1s infinite alternate;
 }
 
-.green.building {
+.blue.building {
     -webkit-animation: pulsate-green 1s infinite alternate;
     -moz-animation: pulsate-green 1s infinite alternate;
     -animation: pulsate-green 1s infinite alternate;
