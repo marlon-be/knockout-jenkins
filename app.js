@@ -30,18 +30,22 @@ var viewModel = function (options) {
             });
         };
         
+        var fixColor = function (job) {
+            if (job.color.substr(job.color.length - 6) == '_anime') {
+                    job.color = job.color.substr(0, job.color.length - 6);
+                    job.building = true;
+                } else {
+                    job.building = false;
+                }
+        };
+        
         var jobsFinished = false;
         var queueFinished = false;
         
         $.get(options.url, function (getData) {
             var byColor = {};
             $.each (getData.jobs, function(key, job) {
-                if (job.color.substr(job.color.length - 6) == '_anime') {
-                    job.color = job.color.substr(0, job.color.length - 6);
-                    job.building = true;
-                } else {
-                    job.building = false;
-                }
+                fixColor(job);
                 if ( byColor[job.color] == undefined ) byColor[job.color] = [];
                 byColor[job.color].push(job);
             });
@@ -82,6 +86,11 @@ var viewModel = function (options) {
             data.queue = [];
             $.each(getData.items, function (i, item) {
                 item.name = item.task.name
+                fixColor(item);
+                item.cssClass = item.color;
+                if (item.building) {
+                    item.cssClass += ' building';
+                }
                 data.queue.push(item);
             });
             

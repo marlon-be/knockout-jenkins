@@ -12,7 +12,7 @@
     <div id="positioning">
 
         <div class="header">
-            <img src="/img/marlon-logo.png" width="80px">
+            <img src="/img/marlon-logo.png" width="80" alt="logo" />
             <h1>Jenkins dashboard</h1>
             <div style="clear:both"></div>
         </div>
@@ -34,6 +34,13 @@
                     <ul class="jobs-container" data-bind="foreach: jobs">
                         <li class="job" data-bind="style: { height: size, width: size }">
                             <a class="job" data-bind="css: color, attr: { href: url, title: name }">
+                                <h2 class="title" data-bind="text: name" ></h2>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="queue" data-bind="foreach: queue">
+                        <li class="job queue-item" data-bind="style: { width: width }">
+                            <a class="job" data-bind="css: cssClass, attr: { href: url, title: name }">
                                 <h2 class="title" data-bind="text: name" ></h2>
                             </a>
                         </li>
