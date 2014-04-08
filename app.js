@@ -13,6 +13,14 @@ var viewModel = function (options) {
             marginHorizontal = parts[1];
         }
     });
+    $('#positioning').css({
+        'padding-top': marginVertical + 'px',
+        'padding-bottom': marginVertical + 'px'
+    });
+    $('#positioning').css({
+        'padding-left': marginHorizontal + 'px',
+        'padding-right': marginHorizontal + 'px'
+    });
 
 
     self.tick = function () {
@@ -20,14 +28,6 @@ var viewModel = function (options) {
         
         var finalizeTick = function() {
             self.data(ko.mapping.fromJS(data));
-            $('#positioning').css({
-                'padding-top': marginVertical + 'px',
-                'padding-bottom': marginVertical + 'px'
-            });
-            $('#positioning').css({
-                'padding-left': marginHorizontal + 'px',
-                'padding-right': marginHorizontal + 'px'
-            });
         };
         
         var fixColor = function (job) {
@@ -108,7 +108,7 @@ var viewModel = function (options) {
 $( document ).ready(function() {
     ko.applyBindings(
         new viewModel(
-            { url: "/fetch.php", interval: 5000 }
+            { url: "/fetch.php", queueUrl: '/fetch_queue.php', interval: 5000 }
         ),
         document.getElementById('jobs')
     );
