@@ -105,23 +105,61 @@ div.bar-outline {
 .building {
     border-radius: 8px;
     box-shadow: 0 0 10px #333;
-    -webkit-animation: pusate 1s infinite alternate;
-    -moz-animation: pusate 1s infinite alternate;
-    -animation: pusate 1s infinite alternate;
+    -webkit-animation: pulsate-gray 1s infinite alternate;
+    -moz-animation: pulsate-gray 1s infinite alternate;
+    -animation: pulsate-gray 1s infinite alternate;
     text-shadow: 0 0 8px #ccc;
 }
 
-@-webkit-keyframes pusate {
+.red.building {
+    -webkit-animation: pulsate-red 1s infinite alternate;
+    -moz-animation: pulsate-red 1s infinite alternate;
+    -animation: pulsate-red 1s infinite alternate;
+}
+
+.green.building {
+    -webkit-animation: pulsate-green 1s infinite alternate;
+    -moz-animation: pulsate-green 1s infinite alternate;
+    -animation: pulsate-green 1s infinite alternate;
+}
+
+@-webkit-keyframes pulsate-red {
     from { box-shadow: 0 0 10px #333; }
     to { box-shadow: 0 0 20px #c00; }
 }
-@-moz-keyframes pusate {
+@-moz-keyframes pulsate-red {
     from { box-shadow: 0 0 10px #333; }
     to { box-shadow: 0 0 20px #c00; }
 }
-@keyframes pusate {
+@keyframes pulsate-red {
     from { box-shadow: 0 0 10px #333; }
     to { box-shadow: 0 0 20px #c00; }
+}
+
+@-webkit-keyframes pulsate-green {
+    from { box-shadow: 0 0 10px #333; }
+    to { box-shadow: 0 0 20px #0c0; }
+}
+@-moz-keyframes pulsate-green {
+    from { box-shadow: 0 0 10px #333; }
+    to { box-shadow: 0 0 20px #0c0; }
+}
+@keyframes pulsate-green {
+    from { box-shadow: 0 0 10px #333; }
+    to { box-shadow: 0 0 20px #0c0; }
+}
+
+@-webkit-keyframes pulsate-gray {
+    from { box-shadow: 0 0 10px #333; }
+    to { box-shadow: 0 0 20px #ccc; }
+}
+@-moz-keyframes pulsate-gray {
+    from { box-shadow: 0 0 10px #333; }
+    to { box-shadow: 0 0 20px #ccc; }
+}
+@keyframes pulsate-gray {
+    from { box-shadow: 0 0 10px #333; }
+    to { box-shadow: 0 0 20px #ccc; }
 }
 
 /* queue */
