@@ -32,7 +32,7 @@
                         </li>
                     </ul>
                     <ul class="queue" data-bind="foreach: queue">
-                        <li class="job queue-item" data-bind="style: { width: width }">
+                        <li class="job queue-item">
                             <a class="job" data-bind="css: cssClass, attr: { href: url, title: name }">
                                 <h2 class="title" data-bind="text: name" ></h2>
                             </a>
@@ -41,7 +41,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </body>
 </html>

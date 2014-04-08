@@ -27,6 +27,8 @@ var viewModel = function (options) {
         var data = {};
         
         var finalizeTick = function() {
+            data.queue = [];
+            $.extend(data.queue, data.pending, data.building);
             self.data(ko.mapping.fromJS(data));
         };
         
@@ -54,6 +56,7 @@ var viewModel = function (options) {
             var maxHeight = Math.floor(viewportHeight / rows), maxWidth = Math.floor(viewportWidth / 10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
+            data.building = [];
             data.colors = [];
             $.each(['red', 'red_anime', 'yellow', 'yellow_anime','aborted', 'aborted_anime','blue', 'blue_anime','disabled', 'disabled_anime'], function(index, color) {
                 if ( byColor[color] != undefined ) {
@@ -64,7 +67,9 @@ var viewModel = function (options) {
                         job.cssClass = job.color;
                         if (job.building) {
                             job.cssClass += ' building';
+                            data.building.push(job);
                         }
+                        data.jobs.push(job);
                     });
                     data.colors.push(colorObj);
                 }
@@ -81,7 +86,7 @@ var viewModel = function (options) {
         });
         
         $.get(options.queueUrl, function (getData) {
-            data.queue = [];
+            data.pending = [];
             $.each(getData.items, function (i, item) {
                 item.name = item.task.name
                 fixColor(item);
@@ -89,7 +94,7 @@ var viewModel = function (options) {
                 if (item.building) {
                     item.cssClass += ' building';
                 }
-                data.queue.push(item);
+                data.pending.push(item);
             });
             
             queueFinished = true
