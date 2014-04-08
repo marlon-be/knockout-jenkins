@@ -54,6 +54,7 @@ ul li a{
     height:100%;
     padding:0.5em;
     width: 100%;
+    overflow: hidden;
 }
 ul li{
     margin:1em;
@@ -125,13 +126,13 @@ div.bar-outline {
 
 /* queue */
 .queue-item {
-    width: 80px;
+    width: 40%;
     height: 80px;
 }
 
 .queue {
     height: 80px;
-    width: 100%;
+    width: 80%;
     padding: 10px;
     border-right: 0;
     position: absolute;
