@@ -55,8 +55,6 @@ ul li a{
     padding:0.5em;
     width: 100%;
     overflow: hidden;
-    border-radius: 8px;
-    text-shadow: 0 0 8px #ccc;
 }
 ul li{
     margin:1em;
