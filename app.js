@@ -25,13 +25,13 @@ var viewModel = function (options) {
 
     self.tick = function () {
         var data = {};
-        
+
         var finalizeTick = function() {
             data.queue = [];
             $.extend(data.queue, data.pending, data.building);
             self.data(ko.mapping.fromJS(data));
         };
-        
+
         var fixColor = function (job) {
             if (job.color.substr(job.color.length - 6) == '_anime') {
                     job.color = job.color.substr(0, job.color.length - 6);
@@ -40,10 +40,10 @@ var viewModel = function (options) {
                     job.building = false;
                 }
         };
-        
+
         var jobsFinished = false;
         var queueFinished = false;
-        
+
         $.get(options.url, function (getData) {
             var byColor = {};
             $.each (getData.jobs, function(key, job) {
@@ -78,17 +78,18 @@ var viewModel = function (options) {
             $.each(data.colors, function(index, color) {
                 color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
-            
+
             jobsFinished = true;
             if (jobsFinished && queueFinished) {
                 finalizeTick();
             }
         });
-        
+
         $.get(options.queueUrl, function (getData) {
             data.pending = [];
             $.each(getData.items, function (i, item) {
-                item.name = item.task.name
+                item.name = item.task.name;
+                item.color = item.task.color;
                 fixColor(item);
                 item.cssClass = item.color;
                 if (item.building) {
@@ -96,7 +97,7 @@ var viewModel = function (options) {
                 }
                 data.pending.push(item);
             });
-            
+
             queueFinished = true
             if (jobsFinished && queueFinished) {
                 finalizeTick();
