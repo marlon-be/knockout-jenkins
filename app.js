@@ -22,13 +22,24 @@ var viewModel = function (options) {
         'padding-right': marginHorizontal + 'px'
     });
 
+    $(document).on('DOMNodeInserted', '.console-text .text', function() {
+        $(this).scrollTop($(this).height());
+    });
+
 
     self.tick = function () {
-        var data = {};
+        var data = {},
+            retrievedConsoles = {};
 
         var finalizeTick = function() {
-            data.queue = [];
-            $.extend(data.queue, data.pending, data.building);
+            data.queue = data.building;
+            data.consoles = [];
+            $.each(retrievedConsoles, function(name, text) {
+                data.consoles.push({
+                    name: name,
+                    consoleText: text
+                });
+            });
             self.data(ko.mapping.fromJS(data));
         };
 
@@ -41,8 +52,21 @@ var viewModel = function (options) {
                 }
         };
 
-        var jobsFinished = false;
-        var queueFinished = false;
+        var loadConsoleText = function(name) {
+            $.get(options.consoleUrl, function(consoleText) {
+                retrievedConsoles[ name ] = consoleText;
+                var allTextsPresent = true;
+                $.each(retrievedConsoles, function(buildName, text) {
+                    if (text === false) {
+                        allTextsPresent = false;
+                        return false;
+                    }
+                });
+                if (allTextsPresent) {
+                    finalizeTick();
+                }
+            });
+        };
 
         $.get(options.url, function (getData) {
             var byColor = {};
@@ -68,6 +92,8 @@ var viewModel = function (options) {
                         if (job.building) {
                             job.cssClass += ' building';
                             data.building.push(job);
+                            retrievedConsoles[ job.name ] = false;
+                            loadConsoleText(job.name);
                         }
                         data.jobs.push(job);
                     });
@@ -79,27 +105,7 @@ var viewModel = function (options) {
                 color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
 
-            jobsFinished = true;
-            if (jobsFinished && queueFinished) {
-                finalizeTick();
-            }
-        });
-
-        $.get(options.queueUrl, function (getData) {
-            data.pending = [];
-            $.each(getData.items, function (i, item) {
-                item.name = item.task.name;
-                item.color = item.task.color;
-                fixColor(item);
-                item.cssClass = item.color;
-                if (item.building) {
-                    item.cssClass += ' building';
-                }
-                data.pending.push(item);
-            });
-
-            queueFinished = true
-            if (jobsFinished && queueFinished) {
+            if (!retrievedConsoles) {
                 finalizeTick();
             }
         });
@@ -112,7 +118,7 @@ var viewModel = function (options) {
 $( document ).ready(function() {
     ko.applyBindings(
         new viewModel(
-            { url: "/fetch.php", queueUrl: '/fetch_queue.php', interval: 5000 }
+            { url: "/fetch.php", consoleUrl: '/console-text.php', interval: 5000 }
         ),
         document.getElementById('jobs')
     );

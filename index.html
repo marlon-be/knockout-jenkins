@@ -24,6 +24,14 @@
                     <div class="bar-outline" data-bind="foreach: colors">
                         <div class="bar" data-bind="css: name, style: { height: percentage }"></div>
                     </div>
+                    <div class="console-texts" id="console-texts" data-bind="foreach: consoles">
+                        <div class="console-text">
+                            <h2 data-bind="text: name"></h2>
+                            <div class="text">
+                                <pre data-bind="text: consoleText"></pre>
+                            </div>
+                        </div>
+                    </div>
                     <ul class="jobs-container" data-bind="foreach: jobs">
                         <li class="job" data-bind="style: { height: size, width: size }">
                             <a class="job" data-bind="css: cssClass, attr: { href: url, title: name }">

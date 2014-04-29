@@ -177,3 +177,31 @@ div.bar-outline {
     bottom: 25px;
     background-color: rgba(255,255,255,0.3);
 }
+
+.console-texts {
+    position: absolute;
+    left: 194px;
+    width: 80%;
+    height: 75%;
+}
+
+.console-text {
+    background-color: #000000;
+    color: #eeeeee;
+    float: left;
+    width: 45%;
+    margin-right: 1em;
+    padding:0.5em;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.console-text h2 {
+    margin-bottom: 0.5em;
+}
+
+.console-text .text {
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+    height: 90%;
+    overflow-y: auto;
+}
