@@ -105,7 +105,7 @@ var viewModel = function (options) {
                 color.percentage = Math.round(color.count * 100 / totalJobs) + '%';
             });
 
-            if (!retrievedConsoles) {
+            if ($.isEmptyObject(retrievedConsoles)) {
                 finalizeTick();
             }
         });
