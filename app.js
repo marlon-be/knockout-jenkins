@@ -57,7 +57,7 @@ var viewModel = function (options) {
         };
 
         var loadConsoleText = function(name) {
-            $.get(options.consoleUrl, function(consoleText) {
+            $.get(options.consoleUrl + '?job=' + name, function(consoleText) {
                 retrievedConsoles[ name ] = consoleText;
                 var allTextsPresent = true;
                 $.each(retrievedConsoles, function(buildName, text) {
