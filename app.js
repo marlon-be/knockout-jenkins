@@ -37,9 +37,13 @@ var viewModel = function (options) {
             $.each(retrievedConsoles, function(name, text) {
                 data.consoles.push({
                     name: name,
-                    consoleText: text
+                    consoleText: text,
+                    cssClass: ''
                 });
             });
+            if (data.consoles.length == 1) {
+                data.consoles[0].cssClass = 'full-screen';
+            }
             self.data(ko.mapping.fromJS(data));
         };
 
