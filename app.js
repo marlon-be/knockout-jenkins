@@ -23,7 +23,7 @@ var viewModel = function (options) {
     });
 
     $(document).on('DOMNodeInserted', '.console-text .text', function() {
-        $(this).scrollTop($(this).height());
+        $(this).scrollTop($(this).find('pre').height());
     });
 
 
