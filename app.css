@@ -183,6 +183,7 @@ div.bar-outline {
     left: 194px;
     width: 80%;
     height: 75%;
+    z-index: 5;
 }
 
 .console-text {
