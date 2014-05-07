@@ -72,6 +72,17 @@ var viewModel = function (options) {
             });
         };
 
+        var loadBuild = function(name) {
+            $.get(options.buildUrl + '?job=' + name, function(build) {
+                var dto = {};
+                dto.culprits = [];
+                $.each(build.culprits, function(i, culprit) {
+                    dto.culprits.push(culprit.fullName);
+                });
+                dto.percentage = Math.round((build.duration * 100) / build.estimatedDuration);
+            });
+        };
+
         $.get(options.url, function (getData) {
             var byColor = {};
             $.each (getData.jobs, function(key, job) {
@@ -122,7 +133,7 @@ var viewModel = function (options) {
 $( document ).ready(function() {
     ko.applyBindings(
         new viewModel(
-            { url: "/fetch.php", consoleUrl: '/console-text.php', interval: 5000 }
+            { url: "/fetch.php", consoleUrl: '/console-text.php', buildUrl: '/build.php', interval: 5000 }
         ),
         document.getElementById('jobs')
     );
