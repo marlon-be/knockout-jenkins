@@ -1,9 +1,11 @@
 var viewModel = function (options) {
-    var self = this;
-
+    var self = this,
+        queryVars = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&'),
+        marginVertical = 0,
+        marginHorizontal = 0,
+        $positioningDiv = $('#positioning');
     self.data = ko.observable();
-    var queryVars = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    var marginVertical = 0, marginHorizontal = 0;
+
     $.each(queryVars, function (i, queryVar) {
         var parts = queryVar.split('=');
         if (parts[0] == 'mvertical') {
@@ -13,11 +15,11 @@ var viewModel = function (options) {
             marginHorizontal = parts[1];
         }
     });
-    $('#positioning').css({
+    $positioningDiv.css({
         'padding-top': marginVertical + 'px',
         'padding-bottom': marginVertical + 'px'
     });
-    $('#positioning').css({
+    $positioningDiv.css({
         'padding-left': marginHorizontal + 'px',
         'padding-right': marginHorizontal + 'px'
     });
@@ -133,7 +135,7 @@ var viewModel = function (options) {
 $( document ).ready(function() {
     ko.applyBindings(
         new viewModel(
-            { url: "/fetch.php", consoleUrl: '/console-text.php', buildUrl: '/build.php', interval: 5000 }
+            { url: CONFIG.get('FETCH_URL'), consoleUrl: CONFIG.get('CONSOLE_URL'), buildUrl: CONFIG.get('BUILD_URL'), interval: CONFIG.get('INTERVAL') }
         ),
         document.getElementById('jobs')
     );
