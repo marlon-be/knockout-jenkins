@@ -2,6 +2,24 @@ function ConsoleText (jobName, color) {
     EventDispatcher.call(this);
     ConsoleText.count++;
 
+    var colors = {
+        0: 'black',
+        1: 'red',
+        2: 'green',
+        3: 'yellow',
+        4: 'blue',
+        5: 'magenta',
+        6: 'cyan',
+        7: 'white'
+    };
+    var _replaceColors = function(text) {
+        $.each(colors, function (colorId, colorName) {
+            text = text.replace(new RegExp('\\[3' + colorId + ';1m(.+?)\\[0m', 'g'), '<span style="color:' + colorName + '">$1</span>');
+            text = text.replace(new RegExp('\\[4' + colorId + ';1m(.+?)\\[0m', 'g'), '<span style="background-color:' + colorName + '">$1</span>');
+        });
+        return text;
+    };
+
     // private vars
     var $this = this,
         _loaded = false,
@@ -15,7 +33,7 @@ function ConsoleText (jobName, color) {
 
     $this.loadText = function() {
         $.get(CONFIG.get('CONSOLE_URL') + '?job=' + _jobName, function(consoleText) {
-            _text = consoleText;
+            _text = _replaceColors(consoleText);
             _loaded = true;
             $this.trigger(ConsoleText.events.LOADED, {consoleText: $this});
         });

@@ -206,8 +206,8 @@ div.bar-outline {
     overflow: hidden;
 }
 
-.console-text .text pre {
-    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+.console-text .text pre, .console-text .text pre span {
+    font-family: monospace;
 }
 
 .console-text.text-blue h2 { color: #32921E }
