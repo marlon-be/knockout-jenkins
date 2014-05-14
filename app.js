@@ -53,10 +53,6 @@ var viewModel = function (options) {
                 $.each(toLoad, function(i, job) {
                     job.on(Job.events.LOADED, function(params) {
                         var index = $.inArray(params.job, toLoad);
-                        console.log(JSON.stringify({
-                            name: params.job.getName(),
-                            loaded: params.job.isLoaded()
-                        }));
                         toLoad.splice(index, 1);
                         if (toLoad.length == 0) {
                             assignDtos();
