@@ -5,6 +5,12 @@
     <script type="text/javascript" src="jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="knockout-3.1.0.js"></script>
     <script type="text/javascript" src="knockout.mapping-latest.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript" src="core.js"></script>
+    <script type="text/javascript" src="build.js"></script>
+    <script type="text/javascript" src="buildBar.js"></script>
+    <script type="text/javascript" src="consoleText.js"></script>
+    <script type="text/javascript" src="job.js"></script>
     <script type="text/javascript" src="app.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
 </head>
@@ -28,7 +34,7 @@
                         <div class="console-text" data-bind="css: cssClass">
                             <h2 data-bind="text: name"></h2>
                             <div class="text">
-                                <pre data-bind="text: consoleText"></pre>
+                                <pre data-bind="html: consoleText"></pre>
                             </div>
                         </div>
                     </div>

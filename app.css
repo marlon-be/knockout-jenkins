@@ -29,10 +29,6 @@ html, body {
     background-color: gray;
 }
 
-.blue_anime {
-    background-color: lightgrey;
-}
-
 a {
     text-decoration: none;
     color: black;
@@ -206,7 +202,14 @@ div.bar-outline {
 }
 
 .console-text .text {
-    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
     height: 90%;
-    overflow: auto;
+    overflow: hidden;
 }
+
+.console-text .text pre, .console-text .text pre span {
+    font-family: monospace;
+}
+
+.console-text.text-blue h2 { color: #32921E }
+.console-text.text-red h2 { color: #CB1515; }
+.console-text.text-yellow h2 { color: yellow; }
