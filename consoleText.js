@@ -15,8 +15,8 @@ function ConsoleText (jobName, color) {
     var _replaceColors = function(text) {
         $.each(colors, function (colorId, colorName) {
             text = text.replace(new RegExp('\\[3' + colorId + ';1m(.+?)\\[0m', 'g'), '<span style="color:' + colorName + '">$1</span>');
-            text = text.replace(new RegExp('\\[4' + colorId + ';1m(.+?)\\[0m', 'g'), '<span style="background-color:' + colorName + '">$1</span>');
         });
+        text = text.replace(/\[41;37m(.+?)\[0m/g, '<span style="background-color:red;color:white">$1</span>');
         return text;
     };
 
