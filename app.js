@@ -15,7 +15,6 @@ var viewModel = function (options) {
             var maxHeight = Math.floor(viewportHeight / rows), maxWidth = Math.floor(viewportWidth / 10);
             var size = (maxWidth<maxHeight?maxWidth:maxHeight)-(34);
             data.jobs = [];
-            data.queue = [];
             data.consoles = [];
             $.each(options.order, function(i, colorName) {
                 $.each(jobs, function(key, job) {
@@ -25,8 +24,9 @@ var viewModel = function (options) {
                         dto.size = size + 'px';
                         data.jobs.push(dto);
                         if (job.isBuilding()) {
-                            data.queue.push(job.getDto());
-                            data.consoles.push(job.getConsoleText().getDto());
+                            var consoleDto = job.getConsoleText().getDto();
+                            consoleDto.name += ' (' + dto.percentage + '%)';
+                            data.consoles.push(consoleDto);
                         }
                     }
                 });

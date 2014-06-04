@@ -4,6 +4,7 @@ function Job (apiJob) {
     var $this = this,
         _name = apiJob.name,
         _url = apiJob.url,
+        _percentage = 100,
         _fullColor,
         _color,
         _building,
@@ -22,14 +23,24 @@ function Job (apiJob) {
             }
             _failed = _color === 'red';
 
-            if (_building || _failed) {
+            if (_building) {
+                _percentage = undefined;
+                $.get(CONFIG.get('PROGRESS_URL') + '?job=' + _name, function(progress) {
+                    _percentage = progress;
+                    if ($this.isLoaded()) {
+                        $this.trigger(Job.events.LOADED, { job: $this });
+                    }
+                });
+            }
+            if (_failed) {
                 _build = new Build(_name);
             }
         };
 
     this.isLoaded = function() {
         return (typeof _consoleText === 'undefined' || _consoleText.isLoaded()) &&
-            (typeof _build === 'undefined' || _build.isLoaded());
+            (typeof _build === 'undefined' || _build.isLoaded()) &&
+            typeof _percentage !== 'undefined';
     };
 
     $this.getColor = function() {
@@ -65,7 +76,7 @@ function Job (apiJob) {
             url: _url,
             cssClass: _color + (_building ? ' building' : ''),
             culprits: _build ? _build.getCulprits() : [],
-            percentage: _build ? _build.getPercentage() : 100
+            percentage: _percentage
         };
     };
 

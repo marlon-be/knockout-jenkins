@@ -178,7 +178,7 @@ div.bar-outline {
     position: absolute;
     left: 194px;
     width: 80%;
-    height: 75%;
+    height: 90%;
     z-index: 5;
 }
 
@@ -191,6 +191,8 @@ div.bar-outline {
     padding:0.5em;
     height: 100%;
     opacity: 0.8;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .console-text.full-screen {

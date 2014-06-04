@@ -4,6 +4,7 @@ var CONFIG = (function() {
         FETCH_URL: '/fetch.php',
         CONSOLE_URL: '/console-text.php',
         BUILD_URL: '/build.php',
+        PROGRESS_URL: '/progress.php',
         COLOR_ORDER: ['red', 'red_anime', 'yellow', 'yellow_anime','aborted', 'aborted_anime','blue', 'blue_anime','disabled', 'disabled_anime']
     };
 
