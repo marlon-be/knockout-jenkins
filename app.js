@@ -24,7 +24,9 @@ var viewModel = function (options) {
                         dto.size = size + 'px';
                         data.jobs.push(dto);
                         if (job.isBuilding()) {
-                            data.consoles.push(job.getConsoleText().getDto());
+                            var consoleDto = job.getConsoleText().getDto();
+                            consoleDto.name += ' (' + dto.percentage + '%)';
+                            data.consoles.push(consoleDto);
                         }
                     }
                 });

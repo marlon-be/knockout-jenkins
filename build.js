@@ -3,8 +3,7 @@ function Build (jobName) {
     // private vars
     var $this = this,
         _loaded = false,
-        _culprits = [],
-        _percentage = 0;
+        _culprits = [];
 
     $this.isLoaded = function() {
         return _loaded;
@@ -16,7 +15,6 @@ function Build (jobName) {
             $.each(build.culprits, function(i, culprit) {
                 _culprits.push(culprit.fullName);
             });
-            _percentage = Math.round((build.duration * 100) / build.estimatedDuration);
             _loaded = true;
 
             $this.trigger(Build.events.LOADED, {build: $this});
@@ -28,13 +26,6 @@ function Build (jobName) {
             throw new Error('Build is not loaded yet');
         }
         return _culprits;
-    };
-
-    $this.getPercentage = function() {
-        if (!_loaded) {
-            throw new Error('Build is not loaded yet');
-        }
-        return _percentage;
     };
 }
 Build.prototype = new EventDispatcher();
