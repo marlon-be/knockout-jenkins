@@ -40,6 +40,10 @@ var viewModel = function (options) {
         $.get(options.url, function (getData) {
             var toLoad = [];
             $.each(getData.jobs, function(key, apiJob) {
+                if (apiJob._class !== 'hudson.model.FreeStyleProject') {
+                    return true;
+                }
+
                 var job = new Job(apiJob);
                 jobs.push(job);
                 if (!job.isLoaded()) {
